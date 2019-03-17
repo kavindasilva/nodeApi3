@@ -1,0 +1,63 @@
+extends apiView
+
+block content
+	script(src='/javascripts/apiJs1.js')
+	h2=message
+
+	div(class="row")
+		div(class="col-md-4 col-sm-4")
+			div(class="row")
+				button(value="BTN1" class="btn btn-success" onclick="getAllData()")="View"
+			div(class="row")
+				div(id="newData")
+					label.width30="ID"
+					input(type='text' id='id' name='id')
+					br
+
+					label.width30="Email"
+					input(type='text' id='email' name='eml')
+					br
+
+					label.width30="Password"
+					input(type='text' id='pass' name='pass')
+					br
+
+					label.width30="Pic"
+					input(type='text' id='pic' name='pic')
+					br
+
+					button(class="btn btn-primary" id="btnInsert" onclick="insertNew()")="Add"
+					button(class="btn btn-primary" id="btnSaveEdit" hidden onclick="saveEdit()" )="Edit"
+					button(class="btn btn-primary" id="btnCancelEdit" hidden onclick="cancelEdit()" )="Cancel"
+
+		div(class="col-md-8 col-sm-8")
+			div(id="data1")="init content"
+
+
+block jsContent
+	script.
+		var i=2;
+		$.ajax({
+			type: "GET",
+			url: "http://127.0.0.1:3000/api/j",
+			data: {},
+			success: function(data, status){
+				//
+				console.log(data);
+				$("#data1").empty().append(printAllData(data));
+			},
+			error: function(err){
+				console.log(err);
+			}
+		});
+
+	script.
+		switchSaveInsert(0);
+		//$("#btnSaveEdit").hide();
+		//$("#btnCancelEdit").hide();
+		/*$.get(
+			"http://127.0.0.1:3000/api/j",
+			function(data, status){
+				console.log(data+"\ns2\n"+status);
+			}
+		)*/
